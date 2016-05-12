@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<DialogResults>
+  <FormNode>
+    <name>ParaDialog</name>
+    <path>E:\TEST\</path>
+    <target>erasesu4</target>
+	<terrain>mask_dem_2</terrain>
+    <cell_size_x>1</cell_size_x>
+    <cell_size_y>1</cell_size_y>
+    <row_counts>2604</row_counts>
+    <column_counts>1997</column_counts>
+    <accu_name>accumulation</accu_name>
+    <p_x_name>parent_x</p_x_name>
+    <p_y_name>parent_y</p_y_name>
+  </FormNode>
+  <FormNode>
+    <name>PlaneReclassify</name>
+    <target>
+    </target>
+    <p1>1</p1>
+    <p2>5</p2>
+    <p3>5</p3>
+    <h1>5</h1>
+    <h2>15</h2>
+    <h3>4</h3>
+    <z1>15</z1>
+    <z2>30</z2>
+    <z3>2</z3>
+    <d1>30</d1>
+    <d2>60</d2>
+    <d3>2</d3>
+  </FormNode>
+</DialogResults>
