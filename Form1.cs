@@ -2439,10 +2439,12 @@ namespace OpenSpaceRouting
 
             if (p_length != 0)
             {
+                WriteTexts2RichTextBox(richTextBox1, "起点与终点之间的最短路径长度为" + p_length + "m， 步行所需时间为 " + length + " s.");
                 MessageBox.Show("起点与终点之间的最短路径长度为" + p_length + "m， 步行所需时间为 " + length + " s.", "路径结果");
             }
             else
             {
+                WriteTexts2RichTextBox(richTextBox1, "两点之间无通路！！");
                 MessageBox.Show("两点之间无通路！！","路径结果", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             return pFeatureLayer;
@@ -2518,7 +2520,7 @@ namespace OpenSpaceRouting
         public bool bool_recalculation = true;
         private void axMapControl1_OnMouseDown(object sender, AxESRI.ArcGIS.Controls.IMapControlEvents2_OnMouseDownEvent e)
         {
-            if (e.button == 1)
+            if (e.button == 1 && (this.设置起点ToolStripMenuItem.Checked || this.设置终点ToolStripMenuItem.Checked))
             {
                 if (default_dir == "")
                 {
@@ -2604,6 +2606,7 @@ namespace OpenSpaceRouting
                         start_point_name = fullpath.Substring(fullpath.LastIndexOf("\\") + 1);
                     }
                 }
+                return; 
             }
             if (this.设置起点ToolStripMenuItem.CheckState == CheckState.Unchecked)
             {
@@ -2650,6 +2653,7 @@ namespace OpenSpaceRouting
                         end_point_name = fullpath.Substring(fullpath.LastIndexOf("\\") + 1);
                     }
                 }
+                return;
             }
 
             if (this.设置终点ToolStripMenuItem.CheckState == CheckState.Unchecked)
@@ -3609,7 +3613,7 @@ namespace OpenSpaceRouting
                 CreateShapeFile(default_dir, out_path_name, esriGeometryType.esriGeometryPolyline);
             }
             pFLayer = OpenFeatureFile_5(default_dir, out_path_name, end_x, end_y, cost[end_x, end_y] * cell_size, ref parentX, ref parentY);
-            bool flag = ExportMapToImage(axMapControl1.ActiveView, DateTime.Now.ToLongDateString().Replace(':', '-') + ".jpg", 1);
+            bool flag = ExportMapToImage(axMapControl1.ActiveView, default_dir + DateTime.Now.ToLongDateString().Replace(':', '-') + ".jpg", 1);
             bool_recalculation = false;
 
             richTextBox1.Text += "计算完成(耗时：" + ((DateTime.Now - t_start).TotalMilliseconds / 1000.0).ToString() + ")！\n";

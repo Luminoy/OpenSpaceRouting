@@ -338,15 +338,15 @@
             // 直线剖面ToolStripMenuItem
             // 
             this.直线剖面ToolStripMenuItem.Name = "直线剖面ToolStripMenuItem";
-            this.直线剖面ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
-            this.直线剖面ToolStripMenuItem.Text = "直线剖面";
+            this.直线剖面ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.直线剖面ToolStripMenuItem.Text = "地形剖面";
             this.直线剖面ToolStripMenuItem.Click += new System.EventHandler(this.直线剖面ToolStripMenuItem_Click);
             // 
             // 最短路径剖面ToolStripMenuItem
             // 
             this.最短路径剖面ToolStripMenuItem.Name = "最短路径剖面ToolStripMenuItem";
-            this.最短路径剖面ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
-            this.最短路径剖面ToolStripMenuItem.Text = "最短路径剖面";
+            this.最短路径剖面ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.最短路径剖面ToolStripMenuItem.Text = "耗费数据剖面";
             this.最短路径剖面ToolStripMenuItem.Click += new System.EventHandler(this.最短路径剖面ToolStripMenuItem_Click);
             // 
             // helpToolStripMenuItem
