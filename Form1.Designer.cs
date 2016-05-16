@@ -55,7 +55,6 @@
             this.计算最短路径ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.坡度计算ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.地形因子设置ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.updateNodesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.detectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.起点终点之间ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.自定义检测ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -72,6 +71,7 @@
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.更新节点ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.axToolbarControl1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.axMapControl1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.axLicenseControl1)).BeginInit();
@@ -137,7 +137,6 @@
             this.初始化设置ToolStripMenuItem,
             this.预处理ToolStripMenuItem,
             this.耗费3ToolStripMenuItem,
-            this.updateNodesToolStripMenuItem,
             this.detectionToolStripMenuItem,
             this.剖面线ToolStripMenuItem,
             this.helpToolStripMenuItem});
@@ -161,28 +160,28 @@
             // 打开MXDToolStripMenuItem
             // 
             this.打开MXDToolStripMenuItem.Name = "打开MXDToolStripMenuItem";
-            this.打开MXDToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
+            this.打开MXDToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.打开MXDToolStripMenuItem.Text = "打开MXD";
             this.打开MXDToolStripMenuItem.Click += new System.EventHandler(this.加载MXDToolStripMenuItem_Click);
             // 
             // 保存MXDToolStripMenuItem
             // 
             this.保存MXDToolStripMenuItem.Name = "保存MXDToolStripMenuItem";
-            this.保存MXDToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
+            this.保存MXDToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.保存MXDToolStripMenuItem.Text = "保存MXD";
             this.保存MXDToolStripMenuItem.Click += new System.EventHandler(this.保存MXDToolStripMenuItem_Click);
             // 
             // 另存为MXDToolStripMenuItem
             // 
             this.另存为MXDToolStripMenuItem.Name = "另存为MXDToolStripMenuItem";
-            this.另存为MXDToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
+            this.另存为MXDToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.另存为MXDToolStripMenuItem.Text = "另存为MXD";
             this.另存为MXDToolStripMenuItem.Click += new System.EventHandler(this.另存为MXDToolStripMenuItem_Click);
             // 
             // 保存图片ToolStripMenuItem
             // 
             this.保存图片ToolStripMenuItem.Name = "保存图片ToolStripMenuItem";
-            this.保存图片ToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
+            this.保存图片ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.保存图片ToolStripMenuItem.Text = "保存图片";
             this.保存图片ToolStripMenuItem.Click += new System.EventHandler(this.outPicture_Click);
             // 
@@ -212,63 +211,63 @@
             // 设置起点ToolStripMenuItem
             // 
             this.设置起点ToolStripMenuItem.Name = "设置起点ToolStripMenuItem";
-            this.设置起点ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.设置起点ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.设置起点ToolStripMenuItem.Text = "设置起点";
             this.设置起点ToolStripMenuItem.Click += new System.EventHandler(this.设置起点ToolStripMenuItem_Click);
             // 
             // 设置终点ToolStripMenuItem
             // 
             this.设置终点ToolStripMenuItem.Name = "设置终点ToolStripMenuItem";
-            this.设置终点ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.设置终点ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.设置终点ToolStripMenuItem.Text = "设置终点";
             this.设置终点ToolStripMenuItem.Click += new System.EventHandler(this.设置终点ToolStripMenuItem_Click);
             // 
             // 设置工作路径ToolStripMenuItem
             // 
             this.设置工作路径ToolStripMenuItem.Name = "设置工作路径ToolStripMenuItem";
-            this.设置工作路径ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.设置工作路径ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.设置工作路径ToolStripMenuItem.Text = "设置工作路径";
             this.设置工作路径ToolStripMenuItem.Click += new System.EventHandler(this.设置工作路径ToolStripMenuItem_Click);
             // 
             // 设置目标图层ToolStripMenuItem
             // 
             this.设置目标图层ToolStripMenuItem.Name = "设置目标图层ToolStripMenuItem";
-            this.设置目标图层ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.设置目标图层ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.设置目标图层ToolStripMenuItem.Text = "设置目标图层";
             this.设置目标图层ToolStripMenuItem.Click += new System.EventHandler(this.设置目标图层ToolStripMenuItem_Click);
             // 
             // 添加栅格数据ToolStripMenuItem
             // 
             this.添加栅格数据ToolStripMenuItem.Name = "添加栅格数据ToolStripMenuItem";
-            this.添加栅格数据ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.添加栅格数据ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.添加栅格数据ToolStripMenuItem.Text = "添加栅格数据";
             this.添加栅格数据ToolStripMenuItem.Click += new System.EventHandler(this.添加栅格数据ToolStripMenuItem_Click);
             // 
             // 还原现场ToolStripMenuItem
             // 
             this.还原现场ToolStripMenuItem.Name = "还原现场ToolStripMenuItem";
-            this.还原现场ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.还原现场ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.还原现场ToolStripMenuItem.Text = "还原结果数据";
             this.还原现场ToolStripMenuItem.Click += new System.EventHandler(this.还原现场ToolStripMenuItem_Click);
             // 
             // 保存结果数据ToolStripMenuItem
             // 
             this.保存结果数据ToolStripMenuItem.Name = "保存结果数据ToolStripMenuItem";
-            this.保存结果数据ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.保存结果数据ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.保存结果数据ToolStripMenuItem.Text = "保存结果数据";
             this.保存结果数据ToolStripMenuItem.Click += new System.EventHandler(this.保存数据ToolStripMenuItem_Click);
             // 
             // 栅格清零ToolStripMenuItem
             // 
             this.栅格清零ToolStripMenuItem.Name = "栅格清零ToolStripMenuItem";
-            this.栅格清零ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.栅格清零ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.栅格清零ToolStripMenuItem.Text = "栅格清零";
             this.栅格清零ToolStripMenuItem.Click += new System.EventHandler(this.SetAsZeroToolStripMenuItem_Click);
             // 
             // 清除程序缓存ToolStripMenuItem
             // 
             this.清除程序缓存ToolStripMenuItem.Name = "清除程序缓存ToolStripMenuItem";
-            this.清除程序缓存ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.清除程序缓存ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.清除程序缓存ToolStripMenuItem.Text = "清除程序缓存";
             this.清除程序缓存ToolStripMenuItem.Click += new System.EventHandler(this.清除程序缓存ToolStripMenuItem_Click);
             // 
@@ -277,7 +276,8 @@
             this.耗费3ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.计算最短路径ToolStripMenuItem,
             this.坡度计算ToolStripMenuItem,
-            this.地形因子设置ToolStripMenuItem});
+            this.地形因子设置ToolStripMenuItem,
+            this.更新节点ToolStripMenuItem});
             this.耗费3ToolStripMenuItem.Name = "耗费3ToolStripMenuItem";
             this.耗费3ToolStripMenuItem.Size = new System.Drawing.Size(92, 21);
             this.耗费3ToolStripMenuItem.Text = "最短路径分析";
@@ -302,13 +302,6 @@
             this.地形因子设置ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.地形因子设置ToolStripMenuItem.Text = "地形因子设置";
             this.地形因子设置ToolStripMenuItem.Click += new System.EventHandler(this.地形因子设置ToolStripMenuItem_Click);
-            // 
-            // updateNodesToolStripMenuItem
-            // 
-            this.updateNodesToolStripMenuItem.Name = "updateNodesToolStripMenuItem";
-            this.updateNodesToolStripMenuItem.Size = new System.Drawing.Size(68, 21);
-            this.updateNodesToolStripMenuItem.Text = "更新结点";
-            this.updateNodesToolStripMenuItem.Click += new System.EventHandler(this.heapUpdateNodesToolStripMenuItem_Click);
             // 
             // detectionToolStripMenuItem
             // 
@@ -469,6 +462,13 @@
             this.richTextBox1.Text = "";
             this.richTextBox1.KeyUp += new System.Windows.Forms.KeyEventHandler(this.richTextBox1_KeyUp);
             // 
+            // 更新节点ToolStripMenuItem
+            // 
+            this.更新节点ToolStripMenuItem.Name = "更新节点ToolStripMenuItem";
+            this.更新节点ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.更新节点ToolStripMenuItem.Text = "更新节点";
+            this.更新节点ToolStripMenuItem.Click += new System.EventHandler(this.heapUpdateNodesToolStripMenuItem_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -522,7 +522,6 @@
         private System.Windows.Forms.SplitContainer splitContainer2;
         private System.Windows.Forms.ToolStripMenuItem 设置目标图层ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 耗费3ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem updateNodesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem detectionToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 地图文档ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 打开MXDToolStripMenuItem;
@@ -549,6 +548,7 @@
         private System.Windows.Forms.ToolStripMenuItem 地形因子设置ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 设置工作路径ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 清除程序缓存ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 更新节点ToolStripMenuItem;
     }
 }
 

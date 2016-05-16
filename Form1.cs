@@ -28,7 +28,6 @@ namespace OpenSpaceRouting
         public IEnvelope OutExtent = null;
         public string origin_title = null;
 
-        
         public bool readstartpointfromfile = true; //指示是否从文件中读取起点
         public bool readendpointfromfile = true;  //指示是否从文件中读取终点
 
@@ -72,8 +71,6 @@ namespace OpenSpaceRouting
 
         public Dictionary<string, string> LayerPath = new Dictionary<string, string>(20);
 
-        
-
         //public StreamWriter sw_cost = null;
         //public StreamWriter sw_px = null;
         //public StreamWriter sw_py = null;
@@ -88,13 +85,13 @@ namespace OpenSpaceRouting
             InitializeComponent();
         }
 
-
         public void WriteTexts2RichTextBox(RichTextBox handle, string value)
         {
             handle.Text += value + "\n";
             handle.SelectionStart = handle.TextLength;
             handle.ScrollToCaret();
         }
+
         private void Form1_Load(object sender, EventArgs e)
         {
             #region 添加工具
@@ -194,6 +191,12 @@ namespace OpenSpaceRouting
         {
             //if (pRasLayer != null && pBaseRasLayer != pRasLayer)
             //{
+            if (!LayerPixelType.ContainsKey(pRasLayer.Name))
+            {
+                IRasterProps pProps = pRasLayer.Raster as IRasterProps;
+                LayerPixelType.Add(pRasLayer.Name, pProps.PixelType);
+            }
+            
                 pBaseRasLayer = pRasLayer;
                 OutExtent = pRasLayer.VisibleExtent;
                 cell_size = (pRasLayer.Raster as IRasterProps).MeanCellSize().X;
@@ -2480,15 +2483,15 @@ namespace OpenSpaceRouting
                 return;
             }
             string[] l_names = new string[l_count];
-            for (int i = 0; i < l_count; )
+            for (int i = 0, li = 0; li < l_count; )
             {
-                ILayer p = axMapControl1.get_Layer(i);
+                ILayer p = axMapControl1.get_Layer(li++);
                 if (p is IRasterLayer)
                 {
                     l_names[i++] = p.Name;
                 }
             }
-            LayerListDialog lld = new LayerListDialog(l_names,l_count);
+            LayerListDialog lld = new LayerListDialog(l_names, l_count);
             if (lld.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 string l_name = lld.GetReturnString();
@@ -2519,32 +2522,55 @@ namespace OpenSpaceRouting
             {
                 if (default_dir == "")
                 {
-                    MessageBox.Show("未设置工作目录！", "Error！", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    if (MessageBox.Show("未设置工作路径！是否现在设置？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
+                    {
+                        设置工作路径ToolStripMenuItem_Click(sender, new EventArgs());
+                    }
+                    else
+                        return;
+                    //
                 }
 
                 if (OutExtent == null)
                 {
-                    MessageBox.Show("未设置坐标参考图层！","Error！", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    if (MessageBox.Show("未设置坐标参考图层！是否现在设置？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
+                    {
+                        SetWorkingExtent(ref OutExtent);
+                    }
+                    else
+                        return;
                     //LayerListDialog lld = new LayerListDialog();
-                    SetWorkingExtent(ref OutExtent);
+                    
                 }
+
                 if (bool_start_pt)
                 {
                     sRow = (int)((OutExtent.YMax - e.mapY) / cell_size);
                     sColumn = (int)((e.mapX - OutExtent.XMin) / cell_size);
 
+                    if(!System.IO.File.Exists(default_dir + start_point_name))
+                    {
+                        CreateShapeFile(default_dir, start_point_name, esriGeometryType.esriGeometryPoint);
+                    }
                     OpenFeatureFile(default_dir, start_point_name, e.mapX, e.mapY);
                     readstartpointfromfile = false;
                     bool_recalculation = true;
                 }
+
                 if (bool_end_pt)
                 {
                     eRow = (int)((OutExtent.YMax - e.mapY) / cell_size);
                     eColumn = (int)((e.mapX - OutExtent.XMin) / cell_size);
 
+                    if (!System.IO.File.Exists(default_dir + end_point_name))
+                    {
+                        CreateShapeFile(default_dir, end_point_name, esriGeometryType.esriGeometryPoint);
+                    }
+
                     OpenFeatureFile(default_dir, end_point_name, e.mapX, e.mapY);
                     readendpointfromfile = false;
                 }
+
                 if (this.设置终点ToolStripMenuItem.Checked && !bool_recalculation)
                 {
                     IFeatureLayer pFLayer = OpenFeatureFile_5(default_dir, out_path_name, eRow, eColumn, cost[eRow, eColumn] * cell_size, ref parentX, ref parentY);
@@ -2554,15 +2580,29 @@ namespace OpenSpaceRouting
 
         private void 设置起点ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (start_point_name == "")
+            if ((this.设置起点ToolStripMenuItem.CheckState == CheckState.Unchecked) && start_point_name == "")
             {
-                OpenFileDialog ofg = new OpenFileDialog();
-                ofg.Title = "打开起点文件";
-                ofg.Filter = "Shapefile | *.shp";
-                if (ofg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                if(MessageBox.Show("是否打开已有起点文件？","提示", MessageBoxButtons.YesNo,  MessageBoxIcon.Information) == DialogResult.Yes)
                 {
-                    string fullpath = ofg.FileName;
-                    start_point_name = fullpath.Substring(fullpath.LastIndexOf("\\") + 1);
+                    OpenFileDialog ofg = new OpenFileDialog();
+                    ofg.Title = "打开起点文件";
+                    ofg.Filter = "Shapefile | *.shp";
+                    if (ofg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                    {
+                        string fullpath = ofg.FileName;
+                        start_point_name = fullpath.Substring(fullpath.LastIndexOf("\\") + 1);
+                    }
+                }
+                else
+                {
+                    SaveFileDialog sfg = new SaveFileDialog();
+                    sfg.Title = "保存起点文件";
+                    sfg.Filter = "Shapefile | *.shp";
+                    if (sfg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                    {
+                        string fullpath = sfg.FileName;
+                        start_point_name = fullpath.Substring(fullpath.LastIndexOf("\\") + 1);
+                    }
                 }
             }
             if (this.设置起点ToolStripMenuItem.CheckState == CheckState.Unchecked)
@@ -2586,17 +2626,32 @@ namespace OpenSpaceRouting
 
         private void 设置终点ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (end_point_name == "")
+            if ((this.设置终点ToolStripMenuItem.CheckState == CheckState.Unchecked) && end_point_name == "")
             {
-                OpenFileDialog ofg = new OpenFileDialog();
-                ofg.Title = "打开终点文件";
-                ofg.Filter = "Shapefile | *.shp";
-                if (ofg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                if (MessageBox.Show("是否打开已有终点文件？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
                 {
-                    string fullpath = ofg.FileName;
-                    end_point_name = fullpath.Substring(fullpath.LastIndexOf("\\") + 1);
+                    OpenFileDialog ofg = new OpenFileDialog();
+                    ofg.Title = "打开终点文件";
+                    ofg.Filter = "Shapefile | *.shp";
+                    if (ofg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                    {
+                        string fullpath = ofg.FileName;
+                        end_point_name = fullpath.Substring(fullpath.LastIndexOf("\\") + 1);
+                    }
+                }
+                else
+                {
+                    SaveFileDialog sfg = new SaveFileDialog();
+                    sfg.Title = "保存终点文件";
+                    sfg.Filter = "Shapefile | *.shp";
+                    if (sfg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                    {
+                        string fullpath = sfg.FileName;
+                        end_point_name = fullpath.Substring(fullpath.LastIndexOf("\\") + 1);
+                    }
                 }
             }
+
             if (this.设置终点ToolStripMenuItem.CheckState == CheckState.Unchecked)
             {
                 this.设置终点ToolStripMenuItem.Checked = true;
@@ -3549,8 +3604,11 @@ namespace OpenSpaceRouting
             ////CopyRasterGridFiles(filepath + target_layer, filepath + out_parent_y_name);
             //WriteArray2RasterFile(ref parentY, rstPixelType.PT_FLOAT, default_dir, out_parent_y_name);
 
-            IFeatureLayer pFLayer = OpenFeatureFile_5(default_dir, out_path_name, end_x, end_y, cost[end_x, end_y] * cell_size, ref parentX, ref parentY);
-
+            IFeatureLayer pFLayer;
+            if (!File.Exists(default_dir + out_path_name)) {
+                CreateShapeFile(default_dir, out_path_name, esriGeometryType.esriGeometryPolyline);
+            }
+            pFLayer = OpenFeatureFile_5(default_dir, out_path_name, end_x, end_y, cost[end_x, end_y] * cell_size, ref parentX, ref parentY);
             bool flag = ExportMapToImage(axMapControl1.ActiveView, DateTime.Now.ToLongDateString().Replace(':', '-') + ".jpg", 1);
             bool_recalculation = false;
 
@@ -3641,31 +3699,7 @@ namespace OpenSpaceRouting
 
         private void updateNodesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (cost == null && parentX == null || parentY == null)
-            {
-                MessageBox.Show("未计算accumulation、parent_x与parent_y！", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            DateTime t_1 = DateTime.Now;
 
-            for (int i = 2; i < rpRows - 2; i++)
-            {
-                for (int j = 2; j < rpColumns - 2; j++)
-                {
-                    MyCostFunction.UpdateNodeValues(i, j, end_x, end_y, ref impedance, ref cost, ref parentX, ref parentY);
-                }
-            }
-            DateTime t_2 = DateTime.Now;
-            Console.WriteLine("total seconds(Update) : {0}.\n", (t_2 - t_1).TotalMilliseconds / 1000.0);
-            //WriteArray2RasterFile(ref parentX, rstPixelType.PT_FLOAT, "E:\\TEST\\", "plane_5_dem");
-            //WriteArray2RasterFile(ref parentY, rstPixelType.PT_FLOAT, "E:\\TEST\\", "plane_5_dem_2");
-            IFeatureLayer pFLayer = OpenFeatureFile_5(default_dir, out_path_name, end_x, end_y, cost[end_x, end_y] * cell_size, ref parentX, ref parentY);
-
-            WriteArray2RasterFile(ref cost, rstPixelType.PT_FLOAT, default_dir, out_accu_name);
-            WriteArray2RasterFile(ref parentX, rstPixelType.PT_FLOAT, default_dir, out_parent_x_name);
-            WriteArray2RasterFile(ref parentY, rstPixelType.PT_FLOAT, default_dir, out_parent_y_name);
-
-            MessageBox.Show("更新耗时：{0}", ((t_2 - t_1).TotalMilliseconds / 1000.0).ToString());
         }
 
         public static int aaa = 0;
@@ -3805,7 +3839,8 @@ namespace OpenSpaceRouting
                 if (axMapControl1.CheckMxFile(m_strMxdFileName))
                 {
                     axMapControl1.LoadMxFile(m_strMxdFileName);
-                    this.Text = origin_title + " - " + sMxdFileName;
+                    //this.Text = origin_title + " - " + sMxdFileName;
+                    this.Text = sMxdFileName;
                 }
             }
             int layer_count = axMapControl1.LayerCount;
@@ -4048,6 +4083,7 @@ namespace OpenSpaceRouting
         {
             if (impedance == null)
             {
+                WriteTexts2RichTextBox(richTextBox1, "障碍数据丢失！请先进行最短路径计算！");
                 MessageBox.Show("障碍数据丢失！请先进行最短路径计算！", "运行参数错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
@@ -4126,7 +4162,7 @@ namespace OpenSpaceRouting
                     catch (Exception ex)
                     {
                         Console.WriteLine("写入数据错误！！" + ex.Message);
-                        sw.WriteLine("写入数据错误！！" + ex.Message);
+                        WriteTexts2RichTextBox(richTextBox1, "写入数据错误！！" + ex.Message);
                     }
                 }
                 sw.Close();

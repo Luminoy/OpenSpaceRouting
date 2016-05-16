@@ -270,7 +270,7 @@ namespace OpenSpaceRouting
             sdlg.Filter = "所有文件|*.*";
             if (sdlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                textBox_out_layer.Text = sdlg.FileName;
+                textBox_out_layer.Text = Path.GetFileName(sdlg.FileName);
             }
             sdlg = null;
         }
@@ -278,7 +278,7 @@ namespace OpenSpaceRouting
         private void btn_path_Click(object sender, EventArgs e)
         {
             FolderBrowserDialog odlg = new FolderBrowserDialog();
-            odlg.SelectedPath = "E:\\TEST\\slope_out";
+            odlg.SelectedPath = fm1.default_dir;
             if (odlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 textBox_in_layer.Text = odlg.SelectedPath;
